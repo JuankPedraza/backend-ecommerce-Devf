@@ -20,8 +20,7 @@ app.use((req, res, next) => {
 });
 
 const port = 3000;
-const SENDGRID_API_KEY =
-  "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";
+
 
 const productos = [
   {
