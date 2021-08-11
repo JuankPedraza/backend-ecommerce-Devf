@@ -46,17 +46,17 @@ const productos = [
   },
 ];
 
-app.get("/api/productos", (req, res) => {
+router.get("/api/productos", (req, res) => {
   res.status(200).send({ productos: productos });
 });
 
-app.get("/api/productos/:id", (req, res) => {
+router.get("/api/productos/:id", (req, res) => {
   var id = req.params.id;
   let detalleProducto = productos.find((producto) => producto._id == id);
   res.status(200).send({ producto: detalleProducto });
 });
 
-app.post("/api/productos", (req, res) => {
+router.post("/api/productos", (req, res) => {
   let id = random.int((min = 1), (max = 10000000));
   let productosIn = req.body;
   productosIn._id = id;
@@ -64,7 +64,7 @@ app.post("/api/productos", (req, res) => {
   res.status(200).send({ message: "Producto agregado correctamente" });
 });
 
-app.post("api/email", (req, res) => {
+router.post("api/email", (req, res) => {
   let destinario = req.body.destinatario;
   let mensaje = req.body.mensaje;
   sgMail.setApiKey(SENDGRID_API_KEY);
@@ -85,6 +85,6 @@ app.post("api/email", (req, res) => {
     });
 });
 
-app.use('/', (req, res) => res.send({mensaje: 'Hola'}));
+app.use("/.netlify/functions/server", router);
 module.exports = app;
 module.exports.handler = serverless(app);
