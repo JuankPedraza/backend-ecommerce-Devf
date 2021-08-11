@@ -64,26 +64,6 @@ router.post("/api/productos", (req, res) => {
   res.status(200).send({ message: "Producto agregado correctamente" });
 });
 
-router.post("api/email", (req, res) => {
-  let destinario = req.body.destinatario;
-  let mensaje = req.body.mensaje;
-  sgMail.setApiKey(SENDGRID_API_KEY);
-  const msg = {
-    to: destinario,
-    from: "zuleta-96@hotmail.com",
-    subject: "Compra realizada correctamente",
-    text: mensaje,
-    html: "<strong>Tu compra se ha realizado correctamente en Ecommerce-DevF. ¡Muchas gracias!</strong>",
-  };
-  sgMail
-    .send(msg)
-    .then(() => {
-      res.status(200).send({ message: "Email enviado correctamente" });
-    })
-    .catch((error) => {
-      res.status(error.code).send({ error });
-    });
-});
 
 app.use("/.netlify/functions/server", router);
 module.exports = app;
